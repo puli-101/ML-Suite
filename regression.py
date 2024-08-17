@@ -22,7 +22,7 @@ data.loc[data['type'] == 'spam', 'type',] = 0
 data.loc[data['type'] == 'ham', 'type',] = 1
 
 X = data['message'] 
-Y = data['type'].astype('int')
+Y = data['type']
 
 #splitting data into training & test
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.2) #random_state=1
@@ -33,6 +33,10 @@ feat_extractor = TfidfVectorizer(min_df = 1, stop_words='english', lowercase=Tru
 
 X_train_feat = feat_extractor.fit_transform(X_train)
 X_test_feat = feat_extractor.transform(X_test)
+
+# convert Y to integers
+Y_train = Y_train.astype('int')
+Y_test = Y_test.astype('int')
 
 #Training the ML model - Logistic Regression
 model = LogisticRegression()
