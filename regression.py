@@ -15,8 +15,6 @@ data_set_path = "dataset/spam.csv"
 raw = pd.read_csv(data_set_path, encoding="ISO-8859-1")
 data = raw.where((pd.notnull(raw)),'')
 
-print(data.shape)
-
 #Relabeling (Encoding)
 #spam -> 0
 #ham -> 1
@@ -30,5 +28,13 @@ Y = data['type']
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y, random_state=3, test_size=0.2)
 
 #Feature extraction
-#transform text data to feature vectors 
-feat_extract = 
+# transform text data to feature vectors for logistic regression
+feat_extractor = TfidfVectorizer(min_df = 1, stop_words='english', lowercase=True)
+
+X_train_feat = feat_extractor.fit_transform(X_train)
+X_test_feat = feat_extractor.transform(X_test)
+
+# convert Y to integers
+Y_train = Y_train.astype('int')
+Y_test = Y_test.astype('int')
+
