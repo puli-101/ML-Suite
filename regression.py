@@ -25,7 +25,7 @@ X = data['message']
 Y = data['type']
 
 #splitting data into training & test
-X_train, X_test, Y_train, Y_test = train_test_split(X,Y, random_state=3, test_size=0.2)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.2) #random_state=1
 
 #Feature extraction
 # transform text data to feature vectors for logistic regression
@@ -38,3 +38,15 @@ X_test_feat = feat_extractor.transform(X_test)
 Y_train = Y_train.astype('int')
 Y_test = Y_test.astype('int')
 
+#Training the ML model - Logistic Regression
+model = LogisticRegression()
+model.fit(X_train_feat, Y_train)
+
+#Model evaluation
+prediction = model.predict(X_train_feat)
+accuracy = accuracy_score(Y_train, prediction)
+print("Accuracy on training : ",accuracy,"%")
+
+prediction = model.predict(X_test_feat)
+accuracy = accuracy_score(Y_test, prediction)
+print("Accuracy on testing : ",accuracy,"%")
